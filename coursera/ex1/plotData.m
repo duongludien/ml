@@ -16,10 +16,18 @@ figure; % open a new figure window
 %       appear as red crosses. Furthermore, you can make the
 %       markers larger by using plot(..., 'rx', 'MarkerSize', 10);
 
-plot(x, y, 'rx', 'MarkerSize', 10);
+
+dataset = load('ex1data1.txt');
+m = size(dataset, 1);
+n = size(dataset, 2) - 1;
+
+x = [ones(m, 1), dataset(:, 1:n)];
+y = dataset(:, n+1);
+
+plot(x(:, 2), y, 'kx', 'LineWidth', 3, 'Color', 'red');
+
 ylabel('Profit in $10,000s');
 xlabel('Population of City in 10,000s');
-
 
 
 % ============================================================

@@ -18,16 +18,13 @@ for iter = 1:num_iters
     %
 
 
-predictions = X * theta;
-X1 = X(:, 1);
-X2 = X(:, 2);
-sqrErrors1 = (predictions - y) .* X1;
-sqrErrors2 = (predictions - y) .* X2;
-sqrErrors = [sum(sqrErrors1); sum(sqrErrors2)];
-
-
-
-theta = theta - alpha * (1/m) * sqrErrors;
+    h = X * theta;
+    n = 1;
+    d = zeros(n+1, 1);
+    for j = 1:n+1
+      d(j) = (1/m) * sum((h - y) .* X(:, j));
+    end;
+    theta = theta - alpha * d;
 
 
 

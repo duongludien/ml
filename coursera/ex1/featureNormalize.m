@@ -25,18 +25,12 @@ sigma = zeros(1, size(X, 2));
 %
 % Hint: You might find the 'mean' and 'std' functions useful.
 %       
-sigma = max(X) - min(X);
-mu = std(X);
-for it=2:size(X,2)
-	X_norm = (X(:,it) - mu(it)) / sigma(it);
-end;
 
-disp(X_norm);
+mu = mean(X_norm);
+X_norm = X_norm - mu;
 
-
-
-
-
+sigma = std(X_norm);
+X_norm = X_norm ./ sigma;
 
 
 % ============================================================

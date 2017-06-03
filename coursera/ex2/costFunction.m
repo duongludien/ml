@@ -20,15 +20,15 @@ grad = zeros(size(theta));
 % Note: grad should have the same dimensions as theta
 %
 
-h = sigmoid(X*theta);
-term = y .* log(h) + (1-y) .* log(1-h);
-J = (-1 / m) * sum(term);
+n = size(X, 2) - 1;   % number of features
+h = sigmoid(X * theta);
+cost = -y .* log(h) - (1-y) .* log(1 - h); 
+J = (1/m) * sum(cost);
 
-for i = 1 : m,
-	grad = grad + (h(i) - y(i)) * X(i,:)';
-end
+for j = 1:n+1
+  grad(j) = (1/m) * sum((h - y) .* X(:, j));
+end;
 
-grad = 1/m*grad;
 
 % =============================================================
 

@@ -21,14 +21,19 @@ p = zeros(size(X, 1), 1);
 %       can use max(A, [], 2) to obtain the max for each row.
 %
 
+X = [ones(m, 1) X];
 
+%printf("X(%d x %d)\n", size(X, 1), size(X,2));
+%printf("Theta1(%d x %d)\n", size(Theta1, 1), size(Theta1,2));
+%printf("Theta2(%d x %d)\n", size(Theta2, 1), size(Theta2,2));
 
-
-
-
-
-
-
+z1 = X * Theta1';
+%z1 = [ones(m,1) z1];
+a = sigmoid(z1);
+a = [ones(m,1) a];
+z2 = a * Theta2';
+h = sigmoid(z2);
+[tmp, p] = max(h, [], 2);
 % =========================================================================
 
 

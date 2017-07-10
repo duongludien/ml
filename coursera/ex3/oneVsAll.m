@@ -49,16 +49,20 @@ X = [ones(m, 1) X];
 %                 initial_theta, options);
 %
 
+for it = 1 : num_labels
+  %printf("Lap %d:\n", it);
+  initial_theta = zeros(n + 1, 1);
+  options = optimset('GradObj', 'on', 'MaxIter', 50);
+  [theta] = ...
+    fmincg (@(t)(lrCostFunction(t, X, (y == it), lambda)), ...
+    initial_theta, options);
+  % printf("%d x %d", size(all_theta(it, :),1), size(all_theta(it, :),2));
+  all_theta(it, :) = theta';
+  %printf("Ket thuc lap %d.\n", it);
+  
+end;
 
-
-
-
-
-
-
-
-
-
+  
 
 % =========================================================================
 

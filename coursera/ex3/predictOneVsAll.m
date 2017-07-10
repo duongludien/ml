@@ -31,8 +31,10 @@ X = [ones(m, 1) X];
 %       
 
 
-
-
+z = X * all_theta';
+predict = sigmoid(z);
+[tmp, p] = max(predict, [], 2);
+% disp(p);
 
 
 

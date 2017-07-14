@@ -49,7 +49,10 @@ a3 = sigmoid(z3);
 y_matrix = eye(num_labels)(y,:); 
 
 cost = y_matrix .* log(a3) + (ones(m,1) - y_matrix) .* log(ones(m,1) - a3);
-J = (-1/m) * sum(sum(cost));
+J_unreg = (-1/m) * sum(sum(cost));
+J = J_unreg + (lambda / (2*m)) * (sum(sum(Theta1 .^ 2)) + sum(sum(Theta2 .^ 2)));
+% Minus the first column
+J = J - (lambda / (2*m)) * (sum(Theta1(:,1) .^ 2) + sum(Theta2(:,1) .^ 2));
 
 %
 % Part 2: Implement the backpropagation algorithm to compute the gradients
@@ -66,6 +69,9 @@ J = (-1/m) * sum(sum(cost));
 %         Hint: We recommend implementing backpropagation using a for-loop
 %               over the training examples if you are implementing it for the 
 %               first time.
+
+
+
 %
 % Part 3: Implement regularization with the cost function and gradients.
 %

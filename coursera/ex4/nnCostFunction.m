@@ -39,8 +39,8 @@ Theta2_grad = zeros(size(Theta2));
 %         cost function computation is correct by verifying the cost
 %         computed in ex4.m
 
-X = [ones(m, 1) X];   % Add bias unit
-z2 = X * Theta1';
+a1 = [ones(m, 1) X];   % Add bias unit
+z2 = a1 * Theta1';
 a2 = sigmoid(z2);
 a2 = [ones(m,1) a2];  % Add bias unit
 z3 = a2 * Theta2';
@@ -51,7 +51,7 @@ y_matrix = eye(num_labels)(y,:);
 cost = y_matrix .* log(a3) + (ones(m,1) - y_matrix) .* log(ones(m,1) - a3);
 J_unreg = (-1/m) * sum(sum(cost));
 J = J_unreg + (lambda / (2*m)) * (sum(sum(Theta1 .^ 2)) + sum(sum(Theta2 .^ 2)));
-% Minus the first column
+% Minus the first column of theta
 J = J - (lambda / (2*m)) * (sum(Theta1(:,1) .^ 2) + sum(Theta2(:,1) .^ 2));
 
 %
@@ -70,7 +70,16 @@ J = J - (lambda / (2*m)) * (sum(Theta1(:,1) .^ 2) + sum(Theta2(:,1) .^ 2));
 %               over the training examples if you are implementing it for the 
 %               first time.
 
+delta3 = a3 - y_matrix;
+delta2 = delta3 * Theta2;
+delta2 = delta2(:, 2:end);  % exclude bias unit
+delta2 = delta2 .* sigmoidGradient(z2);
 
+Delta1 = delta2' * a1;
+Delta2 = delta3' * a2;
+
+Theta1_grad = (1/m) * Delta1;
+Theta2_grad = (1/m) * Delta2;
 
 %
 % Part 3: Implement regularization with the cost function and gradients.
